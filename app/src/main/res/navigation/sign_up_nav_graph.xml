@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sign_up_nav_graph"
+    app:startDestination="@id/signUpPhase1">
+
+    <fragment
+        android:id="@+id/signUpPhase1"
+        android:name="com.example.healthcareapp.ui.fragments.SignUpPhase1"
+        android:label="fragment_sign_up_phase1"
+        tools:layout="@layout/fragment_sign_up_phase1" >
+        <action
+            android:id="@+id/action_signUpPhase1_to_signUpPhase2"
+            app:destination="@id/signUpPhase2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpPhase2"
+        android:name="com.example.healthcareapp.ui.fragments.SignUpPhase2"
+        android:label="fragment_sign_up_phase2"
+        tools:layout="@layout/fragment_sign_up_phase2" />
+</navigation>

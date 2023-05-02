@@ -28,5 +28,7 @@
 
     <string name="terms_policies">By continuing, you agree to HealthCare's Terms And Conditions and Privacy Policy</string>
     <string name="welcome_slogan">Welcome to our app. Let's begin your journey towards a healthier mind and body today!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
