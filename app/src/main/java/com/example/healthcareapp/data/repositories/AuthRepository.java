@@ -29,4 +29,8 @@ public class AuthRepository {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(onCompleteListener);
     }
+    public void signUpWithEmail(String email, String password, OnCompleteListener<AuthResult> onCompleteListener) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(onCompleteListener);
+    }
 }
