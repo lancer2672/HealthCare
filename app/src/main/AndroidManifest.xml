@@ -10,17 +10,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HealthCareApp"
+        android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="31">
         <activity
             android:name=".ui.activities.auth.SignUpActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.activities.auth.SignInActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.activities.auth.WelcomeActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true">

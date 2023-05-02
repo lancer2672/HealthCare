@@ -13,6 +13,13 @@
         android:gravity="bottom"
         android:background="@drawable/gradient_background"
         tools:context=".ui.activities.auth.SignUpActivity">
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:src="@drawable/logo"
+
+            android:layout_marginBottom="-100dp"
+            android:layout_height="200dp"/>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,6 +67,7 @@
             android:layout_width="match_parent"
             android:src="@drawable/bottom_image"
             android:layout_marginBottom="-20dp"
+            android:layout_marginTop="-40dp"
             android:layout_height="200dp"/>
     </LinearLayout>
 </layout>
