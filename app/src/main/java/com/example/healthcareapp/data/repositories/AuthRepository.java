@@ -25,19 +25,8 @@ public class AuthRepository {
     }
     private FirebaseAuth firebaseAuth = FirebaseAuthManager.getInstance();
 
-    public void signInWithEmail(String email, String password) {
+    public void signInWithEmail(String email, String password, OnCompleteListener<AuthResult> onCompleteListener) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-// Sign in success, update UI with the signed-in user's information
-                            Log.d("AUTHENTICATION", "signInWithEmail:success");
-                        } else {
-// If sign in fails, display a message to the user.
-                            Log.w("AUTHENTICATION", "signInWithEmail:failure", task.getException());
-                        }
-                    }
-                });
+                .addOnCompleteListener(onCompleteListener);
     }
 }
