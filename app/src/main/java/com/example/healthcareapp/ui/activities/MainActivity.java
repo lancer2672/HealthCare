@@ -9,6 +9,8 @@ import android.view.MenuItem;
 
 import com.example.healthcareapp.R;
 import com.example.healthcareapp.databinding.ActivityMainBinding;
+import com.example.healthcareapp.ui.fragments.Chat;
+import com.example.healthcareapp.ui.fragments.Home;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,10 +24,16 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.menu_home:
-                    case R.id.menu_statistic:
+                        Home fHome = new Home();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment,fHome).commit();
+                        break;
+                    case R.id.menu_chat:
+                        Chat fChat = new Chat();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment,fChat).commit();
+                        break;
                     case R.id.menu_profile:
                         break;
-                    case R.id.menu_report:
+                    case R.id.menu_feedback:
                         break;
                     default:
                 }

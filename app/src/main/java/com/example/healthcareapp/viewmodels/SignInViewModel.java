@@ -20,7 +20,6 @@ public class SignInViewModel extends ViewModel {
     public MutableLiveData<Boolean> isAuthenticated = new MutableLiveData<Boolean>(false);
     public void login() {
         AuthRepository.getInstance().signInWithEmail(email.getValue(), password.getValue(), new OnCompleteListener<AuthResult>() {
-
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
