@@ -26,15 +26,16 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_home:
                         Home fHome = new Home();
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment,fHome).commit();
-                        break;
+                        return true;
+
                     case R.id.menu_chat:
                         Chat fChat = new Chat();
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment,fChat).commit();
-                        break;
+                        return true;
                     case R.id.menu_profile:
-                        break;
+                        return true;
                     case R.id.menu_feedback:
-                        break;
+                        return true;
                     default:
                 }
                 return false;

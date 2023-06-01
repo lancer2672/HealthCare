@@ -19,6 +19,7 @@
     <string name="forget_password">Forgot your password?</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="bot_slogan">Supporting your journey to mental well-being.</string>
 
     <!--    user information-->
     <string name="last_name">Last Name</string>

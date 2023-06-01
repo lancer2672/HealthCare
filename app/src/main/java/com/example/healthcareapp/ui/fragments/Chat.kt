@@ -1,5 +1,6 @@
 package com.example.healthcareapp.ui.fragments
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.transition.TransitionManager
@@ -7,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.ChatCompletion
@@ -20,54 +23,32 @@ import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
 import com.example.healthcareapp.R
 import com.example.healthcareapp.databinding.FragmentChatBinding
+import com.example.healthcareapp.ui.adapters.MessagesAdapter
+import com.example.healthcareapp.ui.listeners.MessageListener
+import com.example.healthcareapp.viewmodels.ChatViewModel
 import kotlinx.coroutines.*
 
-class Chat : Fragment() {
-
-    private var gptResponse = ""
-    private val gptQuery = ""
+class Chat : Fragment(), MessageListener {
     private lateinit var binding: FragmentChatBinding;
-    @OptIn(BetaOpenAI::class)
-    fun getGPTResponse() {
-        lifecycleScope.launch {
-            val openAI = OpenAI(CHAT_GPT_API_KEY)
-            try {
-                val chatCompletionRequest = ChatCompletionRequest(
-                    model = ModelId("gpt-3.5-turbo"),
-                    messages = listOf(
-                        ChatMessage(
-                            role = ChatRole.User,
-                            content = binding.editQuery.text.toString()
-                        )
-                    )
-                )
-                val completion: ChatCompletion = openAI.chatCompletion(chatCompletionRequest)
-                val response = completion.choices.first().message?.content
-                gptResponse = response ?: ""
-                binding.tvAnswer.text = gptResponse;
-            } catch (e: Exception) {
-                gptResponse = "ERROR: ${e.message ?: ""}"
-            }
-        }
-    }
-
-    companion object {
-        const val CHAT_GPT_API_KEY = "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" //R
-    }
+    private lateinit var viewModel: ChatViewModel;
+    private lateinit var messagesAdapter: MessagesAdapter;
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
-        binding.btnChat.setOnClickListener {
-            getGPTResponse();
-        }
+        viewModel = ViewModelProvider(this)[ChatViewModel::class.java]
+        messagesAdapter = MessagesAdapter(requireActivity(),viewModel);
+
+        setUpViewModel();
         setEditTextTranformation();
 
-        // Inflate the layout for this fragment
+        binding.recMessageList.adapter = messagesAdapter;
+        binding.viewmodel = viewModel;
+
         return binding.root
     }
-    fun setEditTextTranformation(){
+    private fun setEditTextTranformation(){
         binding.edtInput.doOnTextChanged { text, start, before, count ->
             if (text.isNullOrEmpty()) {
                 binding.sendBtn.visibility = View.INVISIBLE;
@@ -95,5 +76,22 @@ class Chat : Fragment() {
             }
         }
 
+    }
+    private fun setUpViewModel(){
+        viewModel.setMessageListener(this);
+        viewModel.loadMesssages();
+        viewModel.isLoading.observe(viewLifecycleOwner){isLoading ->
+            if(isLoading){
+                binding.recMessageList.visibility = View.GONE;
+                binding.chatProgressBar.visibility = View.VISIBLE;
+            }
+            else{
+                binding.recMessageList.visibility = View.VISIBLE;
+                binding.chatProgressBar.visibility = View.GONE;
+            }
+        }
+    }
+    override fun messageIsSended() {
+        messagesAdapter.notifyDataSetChanged();
     }
 }

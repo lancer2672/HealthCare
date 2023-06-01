@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.healthcareapp.viewmodels.ChatViewModel" />
+    </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -13,32 +18,33 @@
                 android:layout_width="match_parent"
                 android:src="@drawable/chat_bot"
                 android:layout_height="wrap_content"/>
-
-<!--        <androidx.cardview.widget.CardView-->
-<!--            android:layout_width="match_parent-->
-<!--            app:cardCornerRadius="25dp"-->
-<!--            app:cardElevation="20dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_height="0dp">-->
+            <TextView
+                android:layout_width="match_parent"
+                android:text="@string/bot_slogan"
+                android:gravity="center_horizontal"
+                android:textStyle="italic"
+                android:layout_height="wrap_content"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_height="match_parent">
-                <EditText
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rec_message_list"
                     android:layout_width="match_parent"
-                    android:id="@+id/edit_query"
-                    android:layout_height="wrap_content"/>
-                <Button
-                    android:layout_width="match_parent"
-                    android:id="@+id/btn_chat"
-                    android:text="CHAT"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_answer"
-                    android:text="@string/hello_blank_fragment" />
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="7dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_marginBottom="-7dp"
+                    android:padding="@dimen/extremely_small" />
+                <ProgressBar
+                    android:layout_width="50dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:progressTint="@color/light_gray"
+                    android:id="@+id/chat_progress_bar"
+                    android:layout_height="0dp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_margin="12dp"
@@ -55,22 +61,20 @@
                     <EditText
                         android:id="@+id/edt_input"
                         android:layout_width="270dp"
-
+                        android:paddingRight="30dp"
+                        android:text="@={viewmodel.message}"
                         android:hint="Viết bình luận..."
                         style="@style/InputText"
                         android:layout_height="wrap_content"/>
                     <ImageView
                         android:id="@+id/send_btn"
-
+                        android:onClick="@{()->viewmodel.sendMessage()}"
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="-30dp"
                         android:src="@drawable/right_arrow"
                         android:visibility="invisible"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
-
             </LinearLayout>
-<!--        </androidx.cardview.widget.CardView>-->
-
     </LinearLayout>
 </layout>
