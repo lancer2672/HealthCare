@@ -8,9 +8,11 @@
         android:gravity="center"
         android:orientation="vertical"
         tools:context=".ui.fragments.Home">
-        <TextView
+        <Button
             android:layout_width="match_parent"
             android:text="HOME FRAGMENT"
+            android:id="@+id/btn"
+            android:backgroundTint="@color/yellow"
             android:layout_height="wrap_content"/>
         <com.github.mikephil.charting.charts.BarChart
             android:layout_width="match_parent"

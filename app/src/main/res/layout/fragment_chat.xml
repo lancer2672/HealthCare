@@ -60,19 +60,20 @@
                         android:layout_height="40dp"/>
                     <EditText
                         android:id="@+id/edt_input"
-                        android:layout_width="270dp"
+                        android:layout_width="240dp"
                         android:paddingRight="30dp"
+                        android:layout_weight="1"
                         android:text="@={viewmodel.message}"
                         android:hint="Viết bình luận..."
                         style="@style/InputText"
                         android:layout_height="wrap_content"/>
                     <ImageView
                         android:id="@+id/send_btn"
+
                         android:onClick="@{()->viewmodel.sendMessage()}"
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="-30dp"
-                        android:src="@drawable/right_arrow"
-                        android:visibility="invisible"
+                        android:layout_marginLeft="12dp"
+                        android:src="@drawable/send_btn"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>

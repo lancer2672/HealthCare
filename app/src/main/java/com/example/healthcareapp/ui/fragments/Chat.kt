@@ -49,26 +49,16 @@ class Chat : Fragment(), MessageListener {
         return binding.root
     }
     private fun setEditTextTranformation(){
-        binding.edtInput.doOnTextChanged { text, start, before, count ->
-            if (text.isNullOrEmpty()) {
-                binding.sendBtn.visibility = View.INVISIBLE;
-            } else {
-                binding.sendBtn.visibility = View.VISIBLE;
-            }
-    }
         binding.edtInput.setOnFocusChangeListener { _, hasFocus ->
             val transition = TransitionInflater.from(requireContext())
                 .inflateTransition(R.transition.transition_comment_bar)
             TransitionManager.beginDelayedTransition(binding.root as ViewGroup, transition)
             if (hasFocus) {
-
                 binding.userCommentAvt.visibility = View.GONE
                 val params = binding.edtInput.layoutParams as LinearLayout.LayoutParams
-                params.width = LinearLayout.LayoutParams.MATCH_PARENT
+                params.width = LinearLayout.LayoutParams.MATCH_PARENT - 40;
                 binding.edtInput.layoutParams = params
             } else {
-
-
                 binding.userCommentAvt.visibility = View.VISIBLE
                 val params = binding.edtInput.layoutParams as LinearLayout.LayoutParams
                 params.width = resources.getDimensionPixelSize(R.dimen.comment_input_width)

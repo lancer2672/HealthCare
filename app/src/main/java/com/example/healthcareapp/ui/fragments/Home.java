@@ -1,5 +1,6 @@
 package com.example.healthcareapp.ui.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.healthcareapp.R;
 import com.example.healthcareapp.databinding.FragmentHomeBinding;
+import com.example.healthcareapp.ui.activities.SurveyActivity;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -42,6 +44,13 @@ public class Home extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false);
         setUpBarChart();
+        binding.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireActivity(), SurveyActivity.class);
+                startActivity(intent);
+            }
+        });
         return binding.getRoot();
     }
 

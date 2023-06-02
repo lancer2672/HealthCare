@@ -6,6 +6,7 @@ import com.example.healthcareapp.data.models.MessageModel
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import java.util.Objects
 
 class ChatRepository {

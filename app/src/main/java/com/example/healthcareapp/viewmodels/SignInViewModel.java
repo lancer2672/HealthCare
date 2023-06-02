@@ -1,6 +1,7 @@
 package com.example.healthcareapp.viewmodels;
 
 import android.database.Observable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableBoolean;
@@ -23,9 +24,11 @@ public class SignInViewModel extends ViewModel {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    isAuthenticated.setValue(true); // set trạng thái đăng nhập thành công và emit event để Activity có thể observe
+                    isAuthenticated.setValue(true);
+                    Log.d("AUTHENTICATION","SUCCESS");
                 } else {
-                    isAuthenticated.setValue(false); // set trạng thái đăng nhập thất bại và emit event để Activity có thể observe
+                    isAuthenticated.setValue(false);
+                    Log.d("AUTHENTICATION","FAILED");
                 }
             }
         });
