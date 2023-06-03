@@ -15,9 +15,8 @@
             android:backgroundTint="@color/yellow"
             android:layout_height="wrap_content"/>
         <com.github.mikephil.charting.charts.BarChart
-            android:layout_width="match_parent"
+            android:layout_width="340dp"
             android:id="@+id/chart"
-            android:layout_height="500dp"/>
-
+            android:layout_height="320dp"/>
     </LinearLayout>
 </layout>

@@ -20,18 +20,40 @@ class SurveyActivity : AppCompatActivity() {
     private lateinit var viewModel:SurveyViewModel;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_survey);
         viewModel = ViewModelProvider(this)[SurveyViewModel::class.java];
-        binding.viewmodel = viewModel;1
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_survey);
+        binding.viewmodel = viewModel;
+        setObservation();
         viewModel.loadQuestionList();
+        setListener();
+    }
 
+    private fun setObservation(){
         viewModel.isLoading.observe(this){isLoading->
-            if(!isLoading){
+            if(isLoading){
+                binding.surveyBtnContainer.visibility = View.GONE;
+                binding.surveyProgress.visibility = View.VISIBLE
+                binding.tvConfidential.visibility = View.GONE
+            }
+            else{
                 Log.d("QUESTION",viewModel.questions.size.toString());
                 viewModel.currentQuestionIndex.value = 0;
+                binding.surveyBtnContainer.visibility = View.VISIBLE;
+                binding.surveyProgress.visibility = View.GONE
+                binding.tvConfidential.visibility = View.VISIBLE
             }
         }
 
+        viewModel.isSelectAnswer.observe(this){isSelectAnswer->
+            if(isSelectAnswer){
+                binding.radGrAnswers.visibility = View.VISIBLE
+                binding.edtAnswer.visibility = View.INVISIBLE
+            }
+            else{
+                binding.radGrAnswers.visibility = View.INVISIBLE
+                binding.edtAnswer.visibility = View.VISIBLE
+            }
+        }
         viewModel.currentQuestionIndex.observe(this){
             if(it == viewModel.questions.size){
                 viewModel.uploadQuestionnaireResult()
@@ -39,47 +61,71 @@ class SurveyActivity : AppCompatActivity() {
                 startActivity(intent);
             }
             else{
-                binding.radGrAnswers.clearCheck()
                 val slideInRight = AnimationUtils.loadAnimation(this, R.anim.slide_in_right)
-                val slideOutLeft = AnimationUtils.loadAnimation(this, R.anim.slide_out_left)
-                binding.tvQuestion.startAnimation(slideOutLeft)
-                binding.radGrAnswers.startAnimation(slideOutLeft)
+                //wait for radGrAnswers or editAnswer visibility change
 
-                slideOutLeft.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation?) {
-                        // Animation start event
-                    }
-                    override fun onAnimationEnd(animation: Animation?) {
-                        // Animation end event
-                        viewModel.loadCurrentQuestionAndAnswers()
-                        for (i in 0 until binding.radGrAnswers.childCount) {
-                            val radioButton = binding.radGrAnswers.getChildAt(i) as RadioButton
-                            if (i < viewModel.answerList.size) {
-                                radioButton.text = viewModel.answerList[i]
-                                radioButton.visibility = View.VISIBLE
-                            } else {
-                                radioButton.visibility = View.INVISIBLE
-                            }
-                        }
-                        binding.tvQuestion.startAnimation(slideInRight)
+                val slideOutLeft = AnimationUtils.loadAnimation(this, R.anim.slide_out_left )
+                //Not start animation to render the first item
+                if(it == 0){
+                    viewModel.loadCurrentQuestionAndAnswers()
+                    if(viewModel.isSelectAnswer.value == true){
                         binding.radGrAnswers.startAnimation(slideInRight)
                     }
-
-                    override fun onAnimationRepeat(animation: Animation?) {
-                        // Animation repeat event
+                    else{
+                        binding.edtAnswer.startAnimation(slideInRight)
                     }
-                })
+                    binding.tvQuestion.startAnimation(slideInRight)
+                    loadRadioBtns();
+                }
+                else{
+                    if(viewModel.isSelectAnswer.value == true){
+                        binding.radGrAnswers.startAnimation(slideOutLeft)
+                    }
+                    else{
+                        binding.edtAnswer.startAnimation(slideOutLeft)
+                    }
+                    binding.tvQuestion.startAnimation(slideOutLeft)
+                    binding.radGrAnswers.clearCheck()
+                    slideOutLeft.setAnimationListener(object : Animation.AnimationListener {
+                        override fun onAnimationStart(animation: Animation?) {
+                        }
+                        override fun onAnimationEnd(animation: Animation?) {
+                            viewModel.loadCurrentQuestionAndAnswers()
+                            loadRadioBtns();
+                            // Animation end event
+                            if(viewModel.isSelectAnswer.value == true){
+                                binding.radGrAnswers.startAnimation(slideInRight)
+                            }
+                            else{
+                                binding.edtAnswer.startAnimation(slideInRight)
+                            }
+                            binding.tvQuestion.startAnimation(slideInRight)
+                        }
+                        override fun onAnimationRepeat(animation: Animation?) {
+                        }
+                    })
+                }
             }
         }
+    }
+    private fun setListener(){
         binding.radGrAnswers.setOnCheckedChangeListener { group, checkedId ->
             val radioButton = findViewById<RadioButton>(checkedId)
-            val seletedIndex = binding.radGrAnswers.indexOfChild(radioButton);
-            viewModel.selectedIndex.value = seletedIndex
+            val selectedIndex = binding.radGrAnswers.indexOfChild(radioButton);
+            viewModel.selectedIndex.value = selectedIndex
+        }
+    }
+    //set text for each radio btn
+    private fun loadRadioBtns(){
+        for (i in 0 until binding.radGrAnswers.childCount) {
+            val radioButton = binding.radGrAnswers.getChildAt(i) as RadioButton
+            if (i < viewModel.answerList.size) {
+                radioButton.text = viewModel.answerList[i]
+                radioButton.visibility = View.VISIBLE
+            } else {
+                radioButton.visibility = View.INVISIBLE
+            }
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-
-    }
 }

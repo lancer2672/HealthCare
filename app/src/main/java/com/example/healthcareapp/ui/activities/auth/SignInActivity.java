@@ -12,6 +12,7 @@ import android.view.View;
 import com.example.healthcareapp.R;
 import com.example.healthcareapp.databinding.ActivitySignInBinding;
 
+import com.example.healthcareapp.ui.activities.MainActivity;
 import com.example.healthcareapp.ui.activities.SurveyActivity;
 import com.example.healthcareapp.viewmodels.SignInViewModel;
 
@@ -42,7 +43,7 @@ public class SignInActivity extends AppCompatActivity  {
             @Override
             public void onChanged(Boolean isAuthenticated) {
                 if(isAuthenticated){
-                    Intent intent  = new Intent(SignInActivity.this, SurveyActivity.class);
+                    Intent intent  = new Intent(SignInActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
             }

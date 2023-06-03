@@ -77,6 +77,7 @@ class Chat : Fragment(), MessageListener {
             }
             else{
                 binding.recMessageList.visibility = View.VISIBLE;
+                binding.recMessageList.scrollToPosition(viewModel.messageList.size -1)
                 binding.chatProgressBar.visibility = View.GONE;
             }
         }
