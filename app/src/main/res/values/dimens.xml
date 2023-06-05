@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="comment_input_width">240dp</dimen>
+    <dimen name="extremely_small">8dp</dimen>
+    <dimen name="small_space">12dp</dimen>
+    <dimen name="medium_space">20dp</dimen>
+    <dimen name="large_space">28dp</dimen>
+
+
+</resources>

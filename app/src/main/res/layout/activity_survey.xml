@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+
         android:background="@drawable/gradient_background"
         tools:context=".ui.activities.SurveyActivity">
         <ImageView
@@ -33,7 +34,7 @@
                 android:gravity="center_horizontal"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:text="1. Bạn có bị rối loạn giấc ngủ ?"
+                android:text="@={viewmodel.textViewQuestionContent}"
                 android:textColor="@color/brown"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -47,7 +48,7 @@
                 android:paddingRight="16dp">
 
                 <RadioButton
-                    android:id="@+id/rad_answer_1"
+                    android:id="@+id/rad_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -57,7 +58,8 @@
                     android:textStyle="bold" />
 
                 <RadioButton
-                    android:id="@+id/rad_answer_2"
+                    android:id="@+id/rad_2"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -67,7 +69,6 @@
                     android:textStyle="bold" />
 
                 <RadioButton
-                    android:id="@+id/rad_answer_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -77,7 +78,6 @@
                     android:textStyle="bold" />
 
                 <RadioButton
-                    android:id="@+id/rad_answer_4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -88,17 +88,38 @@
             </RadioGroup>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_next_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/next_question"
-            android:textSize="18sp"
-            android:textColor="@color/brown"
-            android:textStyle="bold"
-            android:layout_margin="32dp"
-            android:layout_gravity="end"
-            android:background="@drawable/transparent_btn_bg"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_margin="16dp"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_back_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/yellow"
+                android:onClick="@{()->viewmodel.moveToNextQuestion()}"
+                android:text="@string/back"
+                android:textColor="@color/brown"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_next_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:backgroundTint="@color/yellow"
+                android:onClick="@{()->viewmodel.moveToNextQuestion()}"
+                android:text="@string/next"
+                android:textColor="@color/brown"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <TextView
             android:drawableLeft="@drawable/key"
             android:gravity="center_horizontal"

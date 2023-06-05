@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="BrushingChartColor">
+        <item>#4E4637</item>
+        <item>#c5e1a5</item>
+        <item>#a59da8</item>
+    </array>
+</resources>

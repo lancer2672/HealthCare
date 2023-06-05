@@ -19,6 +19,13 @@
     <string name="forget_password">Forgot your password?</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="bot_slogan">Supporting your journey to mental well-being.</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="start">Start</string>
+    <string name="on_boarding_1_content">Let\'s embark on a journey together to achieve your goals and embrace a healthier life!</string>
+    <string name="on_boarding_2_content">You can chat with our chatbot anytime for assistance and guidance.</string>
 
     <!--    user information-->
     <string name="last_name">Last Name</string>
@@ -27,7 +34,6 @@
     <string name="gender">Gender</string>
     <string name="terms_policies">By continuing, you agree to HealthCare\'s Terms And Conditions and Privacy Policy</string>
     <string name="welcome_slogan">Welcome to our app. Let\'s begin your journey towards a healthier mind and body today!</string>
-    <string name="next_question">Next</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

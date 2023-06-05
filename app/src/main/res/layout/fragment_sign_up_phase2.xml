@@ -14,6 +14,8 @@
         tools:context=".ui.fragments.SignUpPhase2">
 
         <EditText
+            android:lines="1"
+
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/name"
@@ -35,12 +37,14 @@
             android:drawableLeft="@drawable/sex"
             android:drawablePadding="12dp"
             android:hint="Gender"
-
+            android:lines="1"
             android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHighlight="@color/cardview_dark_background"
             android:layout_marginTop="20dp"/>
         <EditText
+            android:lines="1"
+
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/age"
