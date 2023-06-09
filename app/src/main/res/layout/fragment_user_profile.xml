@@ -1,47 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.UserProfile"
-    android:orientation="vertical">
+    tools:context=".ui.fragments.UserProfile">
 
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
+        android:id="@+id/rlayout_userInfor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="20dp">
+
         <androidx.cardview.widget.CardView
             android:id="@+id/id_userImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="35dp"
-            android:padding="10dp"
+            android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
-            android:layout_centerHorizontal="true">
+            android:padding="10dp"
+            app:cardCornerRadius="35dp">
+
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:src="@drawable/useravatar"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/useravatar" />
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/id_userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Daniel"
-            android:textColor="@color/black"
             android:layout_below="@id/id_userImage"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="Daniel"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_medium"
-            android:textStyle="bold"
-            android:layout_marginTop="5dp"/>
+            android:textStyle="bold" />
     </RelativeLayout>
+
     <ScrollView
+        android:id="@+id/sview_backgroundPersonalScreen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlayout_userInfor">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -190,4 +195,18 @@
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-</LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/baseline_settings_24"
+        android:backgroundTint="@color/light_gray"/>
+</RelativeLayout>
