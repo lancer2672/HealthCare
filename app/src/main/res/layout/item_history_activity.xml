@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp">
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_gravity="start"
+            android:src="@drawable/useravatar"
+            android:scaleType="centerCrop"/>
+    </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:layout_marginHorizontal="10dp">
+        <TextView
+            android:id="@+id/activity_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Breath"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="@dimen/font_size_medium"/>
+        <RelativeLayout
+            android:id="@+id/activity_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/activity_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meditation"
+                android:textColor="@color/light_gray"/>
+            <ImageView
+                android:id="@+id/icon_dot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/activity_detail"
+                android:src="@drawable/baseline_fiber_manual_record_24"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="10dp"/>
+            <TextView
+                android:id="@+id/activity_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/icon_dot"
+                android:text="1-3 mins"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_arrow_forward_ios_24"
+                android:layout_toRightOf="@+id/activity_time"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

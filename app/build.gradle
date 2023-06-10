@@ -74,5 +74,9 @@ dependencies {
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
+    //For chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation fileTree(dir: 'libs/MPAndroidChart/MPAndroidChart', include: ['*.jar', '*.aar'])
+
     implementation 'com.github.skydoves:powerspinner:1.2.6'
 }
