@@ -28,6 +28,8 @@ class ChatRepository {
                 if (!querySnapshot.isEmpty) {
                     val chatDoc = querySnapshot.documents[0]
                     chatDoc.reference.update("messages", FieldValue.arrayUnion(message))
+
+
                         .addOnSuccessListener {
                             onSuccess() // Call onSuccess when the operation is successful
                         }
@@ -44,7 +46,6 @@ class ChatRepository {
     }
     fun loadMessages(userId: String, onSuccess: (List<MessageModel>) -> Unit) {
         val chatRef = chatRef.whereEqualTo("userId", userId).limit(1)
-
         chatRef.get()
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {

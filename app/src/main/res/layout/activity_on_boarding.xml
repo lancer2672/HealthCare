@@ -51,11 +51,6 @@
                     android:src="@drawable/dot"
                     android:scaleType="fitXY"
                     android:layout_height="36dp"/>
-                <ImageView
-                    android:layout_width="36dp"
-                    android:src="@drawable/dot"
-                    android:scaleType="fitXY"
-                    android:layout_height="36dp"/>
             </LinearLayout>
             <Button
                 android:layout_width="80dp"

@@ -18,7 +18,7 @@ class OnBoarding : AppCompatActivity() {
     private lateinit var arr:List<String>;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arr = listOf<String>(getString(R.string.on_boarding_1_content),getString(R.string.on_boarding_2_content),"C");
+        arr = listOf<String>(getString(R.string.on_boarding_1_content),getString(R.string.on_boarding_2_content));
         adapter = OnBoardAdapter(arr);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_on_boarding);
         binding.onBoardViewPager.adapter = adapter

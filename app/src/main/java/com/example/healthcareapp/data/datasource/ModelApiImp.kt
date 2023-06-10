@@ -1,14 +1,13 @@
 package com.example.healthcareapp.data.datasource
 
 import com.example.healthcareapp.data.network.ModelApi
-import com.example.healthcareapp.data.repositories.PredictedValueResponse
+import com.example.healthcareapp.data.models.PredictedValueResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Query
 
 class ModelApiImp: ModelApi {
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.251.235:5000/")
+        .baseUrl("http://192.168.122.4:5000/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

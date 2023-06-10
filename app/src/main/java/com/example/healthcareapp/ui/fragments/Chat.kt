@@ -72,13 +72,13 @@ class Chat : Fragment(), MessageListener {
         viewModel.loadMesssages();
         viewModel.isLoading.observe(viewLifecycleOwner){isLoading ->
             if(isLoading){
-                binding.recMessageList.visibility = View.GONE;
-                binding.chatProgressBar.visibility = View.VISIBLE;
+//                binding.recMessageList.visibility = View.GONE;
+//                binding.chatProgressBar.visibility = View.VISIBLE;
             }
             else{
-                binding.recMessageList.visibility = View.VISIBLE;
+//                binding.recMessageList.visibility = View.VISIBLE;
                 binding.recMessageList.scrollToPosition(viewModel.messageList.size -1)
-                binding.chatProgressBar.visibility = View.GONE;
+//                binding.chatProgressBar.visibility = View.GONE;
             }
         }
     }

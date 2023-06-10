@@ -1,6 +1,6 @@
 package com.example.healthcareapp.data.network
 
-import com.example.healthcareapp.data.repositories.PredictedValueResponse
+import com.example.healthcareapp.data.models.PredictedValueResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

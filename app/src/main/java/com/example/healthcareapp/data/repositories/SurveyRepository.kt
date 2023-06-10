@@ -7,6 +7,7 @@ import com.example.healthcareapp.data.models.MessageModel
 import com.example.healthcareapp.data.models.QuestionModel
 import com.example.healthcareapp.data.models.QuestionnaireModel
 import com.example.healthcareapp.data.network.ModelApi
+import com.example.healthcareapp.utils.DateUtils
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.GlobalScope
@@ -29,7 +30,7 @@ class SurveyRepository {
             }
             private set
     }
-    fun getQuestions(onSuccess: (questionList: List<QuestionModel>) -> Unit , onFailure:() ->Unit){
+    fun getQuestions( onSuccess: (questionList: List<QuestionModel>) -> Unit , onFailure:() ->Unit){
         questionRef
             .get()
             .addOnSuccessListener { querySnapshot ->
@@ -50,26 +51,40 @@ class SurveyRepository {
                 onFailure();
             }
     }
-//    snoring: String,
-//    bmi: Float,
-//    sleepHours: Float,
-//    meal: Int,
-//    exercise: String,
-//    studyHours: Float,
-//    sleepProb: String,
-//    age: Int,
-//    smoke: String,
+    fun getSurveyHistory(
+        onSuccess: (surveyList: List<QuestionnaireModel>) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        questionnaireRef
+            .orderBy("createdAt")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val surveyList: MutableList<QuestionnaireModel> = ArrayList()
+                    for (document in querySnapshot) {
+                        val survey = document.toObject(QuestionnaireModel::class.java)
+                        surveyList.add(survey);
+                    }
+                    onSuccess(surveyList) // Call onSuccess with the loaded survey list
+                    Log.i("SURVEY", "Retrieved survey documents successfully: ${surveyList.size}")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("SURVEY", "Error retrieving survey documents", e)
+                onFailure()
+            }
+    }
     private suspend fun getPredictedResult(
-    snoring: String,
-    bmi: String,
-    sleepHours: String,
-    meal: String,
-    exercise: String,
-    studyHours: String,
-    sleepProb: String,
-    age: String,
-    smoke: String,
-    ): Float {
+        snoring: String,
+        bmi: String,
+        sleepHours: String,
+        meal: String,
+        exercise: String,
+        studyHours: String,
+        sleepProb: String,
+        age: String,
+        smoke: String,
+        ): Float {
         val response = modelApi.getPredictedValue(
             snoring,
             bmi ,
@@ -89,9 +104,7 @@ class SurveyRepository {
     fun uploadQuestionnaireResult(userId:String, questionResult: List<QuestionModel>) {
 
         GlobalScope.launch {
-
             val userAnswers = questionResult.map { questionModel -> questionModel.userAnswer }.toTypedArray()
-
             val predictedResult = getPredictedResult(userAnswers[0],
                 userAnswers[1],
                 userAnswers[2],
@@ -118,4 +131,7 @@ class SurveyRepository {
                 }
         }
     }
+
+
+
 }

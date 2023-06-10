@@ -24,13 +24,13 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 
-const val CHAT_GPT_API_KEY = "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" //R
+const val CHAT_GPT_API_KEY = "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"
 
 class ChatViewModel: ViewModel() {
     private var messageListener:MessageListener? = null;
 
     var messageList: ArrayList<MessageModel> = arrayListOf();
-    var message = ObservableField<String>("");
+    var message = ObservableField("");
     var isLoading = MutableLiveData(false);
     fun loadMesssages(){
         isLoading.value = true;
@@ -42,8 +42,8 @@ class ChatViewModel: ViewModel() {
     }
     @OptIn(BetaOpenAI::class)
     fun sendMessage(){
-        message.set("");
         val sendMessage = MessageModel(message.get().toString(),false, Formater.formatChatTime(Date()));
+        message.set("");
         val receiveMessage = MessageModel("",true,Formater.formatChatTime(Date()));
         messageList.add(sendMessage)
         isLoading.value = true;
@@ -88,4 +88,5 @@ class ChatViewModel: ViewModel() {
     fun setMessageListener(listener:MessageListener){
         this.messageListener = listener
     }
+
 }

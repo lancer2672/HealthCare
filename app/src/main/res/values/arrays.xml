@@ -5,4 +5,5 @@
         <item>#c5e1a5</item>
         <item>#a59da8</item>
     </array>
+    <string-array name="months_years" />
 </resources>
