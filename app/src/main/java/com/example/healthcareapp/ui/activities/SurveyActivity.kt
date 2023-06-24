@@ -1,19 +1,19 @@
 package com.example.healthcareapp.ui.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.RadioButton
-import android.widget.RadioGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.healthcareapp.R
 import com.example.healthcareapp.databinding.ActivitySurveyBinding
 import com.example.healthcareapp.viewmodels.SurveyViewModel
+
 
 class SurveyActivity : AppCompatActivity() {
     private lateinit var binding:ActivitySurveyBinding;
@@ -56,9 +56,12 @@ class SurveyActivity : AppCompatActivity() {
         }
         viewModel.currentQuestionIndex.observe(this){
             if(it == viewModel.questions.size){
-                viewModel.uploadQuestionnaireResult()
-                val intent = Intent(this,MainActivity::class.java)
-                startActivity(intent);
+                viewModel.uploadQuestionnaireResult(){result ->
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("result",result);
+                    setResult(RESULT_OK, resultIntent)
+                    finish()
+                }
             }
             else{
                 val slideInRight = AnimationUtils.loadAnimation(this, R.anim.slide_in_right)

@@ -14,7 +14,9 @@ class CircleAngleAnimation(circle: Circle, newAngle: Int) : Animation() {
         this.newAngle = newAngle.toFloat()
         this.circle = circle
     }
-
+    fun triggerAnimation() {
+        circle.triggerAnimation()
+    }
     override fun applyTransformation(interpolatedTime: Float, transformation: Transformation?) {
         val angle = oldAngle + (newAngle - oldAngle) * interpolatedTime
         circle.angle = angle

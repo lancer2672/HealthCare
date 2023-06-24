@@ -11,12 +11,18 @@ import android.graphics.drawable.shapes.RoundRectShape
 import android.util.AttributeSet
 import android.view.View
 
-
 class Circle(context: Context?, attrs: AttributeSet?) :
     View(context, attrs) {
-    private val paint: Paint
-    private val rect: RectF
-    var angle: Float = 0f
+     val paint: Paint
+     val rect: RectF
+     var angle:Float = 0f
+    var value: Float = 0f
+        set(value) {
+            field = value
+            updateColor()
+            updateAngle()
+            invalidate()
+        }
 
     init {
         val strokeWidth = 40
@@ -30,11 +36,27 @@ class Circle(context: Context?, attrs: AttributeSet?) :
         rect = RectF(
             strokeWidth.toFloat(),
             strokeWidth.toFloat(),
-            (200 + strokeWidth).toFloat(),
-            (200 + strokeWidth).toFloat()
+            (130 + strokeWidth).toFloat(),
+            (130 + strokeWidth).toFloat()
         )
-        //Initial Angle (optional, it can be zero)
-        angle = 0f
+    }
+
+    private fun updateColor() {
+        val hue = when {
+            value <= 0.5 -> lerp(120f, 60f, value * 2)
+            else -> lerp(60f, 0f, (value - 0.5f) * 2)
+        }
+        val color = Color.HSVToColor(floatArrayOf(hue, 1f, 1f))
+        paint.color = color
+    }
+    fun triggerAnimation() {
+        updateAngle()
+    }
+    private fun updateAngle() {
+        angle = value * 360f
+        val anim = CircleAngleAnimation(this, angle.toInt())
+        anim.duration = 1000
+        startAnimation(anim)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -43,6 +65,10 @@ class Circle(context: Context?, attrs: AttributeSet?) :
     }
 
     companion object {
-        private const val START_ANGLE_POINT = 90
+        private const val START_ANGLE_POINT = -90
+
+        private fun lerp(a: Float, b: Float, t: Float): Float {
+            return a + (b - a) * t
+        }
     }
 }

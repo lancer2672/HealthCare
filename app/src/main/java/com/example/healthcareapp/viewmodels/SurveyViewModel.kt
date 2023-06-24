@@ -8,11 +8,13 @@ import com.example.healthcareapp.data.models.MonthYearModel
 import com.example.healthcareapp.data.models.QuestionModel
 import com.example.healthcareapp.data.models.QuestionnaireModel
 import com.example.healthcareapp.data.repositories.SurveyRepository
+import com.example.healthcareapp.ui.listeners.ShowDialogListener
 import com.github.mikephil.charting.data.BarEntry
 import com.google.firebase.auth.FirebaseAuth
 import java.util.Calendar
 
 class SurveyViewModel: ViewModel() {
+    private var showDialogListener :ShowDialogListener? = null
     val questions: MutableList<QuestionModel> = mutableListOf()
     val surveyHistoryList: MutableList<QuestionnaireModel> = mutableListOf()
     val monthYearList: MutableList<MonthYearModel> = mutableListOf()
@@ -24,6 +26,13 @@ class SurveyViewModel: ViewModel() {
     var currentQuestionIndex =  MutableLiveData<Int>(-1);
     var selectedIndex = MutableLiveData<Int>(-1);
     var dataChart: ArrayList<BarEntry> = arrayListOf()
+    val predictedResult = MutableLiveData<Float>(0f)
+    fun setShowDialogListener(s : ShowDialogListener){
+        showDialogListener = s
+    }
+    fun getShowDialogListener(): ShowDialogListener?{
+        return showDialogListener
+    }
     fun loadQuestionList() {
         isLoading.value = true;
         SurveyRepository.instance?.getQuestions(onSuccess = {result->
@@ -136,8 +145,12 @@ class SurveyViewModel: ViewModel() {
         }
 
     }
-    fun uploadQuestionnaireResult(){
+    fun uploadQuestionnaireResult(onSuccess: (Float) -> Unit) {
         SurveyRepository.instance
-            ?.uploadQuestionnaireResult(FirebaseAuth.getInstance().currentUser?.uid.toString(),questions)
+            ?.uploadQuestionnaireResult(FirebaseAuth.getInstance().currentUser?.uid.toString(), questions) {
+                predictedResult.value = it
+                Log.d("Predicted Result in ViewModel", it.toString())
+                onSuccess(it)
+            }
     }
 }

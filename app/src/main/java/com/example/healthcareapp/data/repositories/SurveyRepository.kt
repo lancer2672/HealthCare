@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.http.GET
 import java.util.Date
 
@@ -101,9 +102,8 @@ class SurveyRepository {
         return predictedValue;
     }
 
-    fun uploadQuestionnaireResult(userId:String, questionResult: List<QuestionModel>) {
-
-        GlobalScope.launch {
+    fun uploadQuestionnaireResult(userId:String, questionResult: List<QuestionModel>, onSuccess: (Float) -> Unit) {
+        runBlocking  {
             val userAnswers = questionResult.map { questionModel -> questionModel.userAnswer }.toTypedArray()
             val predictedResult = getPredictedResult(userAnswers[0],
                 userAnswers[1],
@@ -125,13 +125,13 @@ class SurveyRepository {
             questionnaireRef.add(newQuestionnaireRecord)
                 .addOnSuccessListener {
                     Log.i("QUESTION", "Adding questionnaire successfully")
+                    onSuccess.invoke(predictedResult);
                 }
                 .addOnFailureListener { e ->
                     Log.e("QUESTION", "Err while adding questionnaire ${e}")
                 }
         }
     }
-
 
 
 }

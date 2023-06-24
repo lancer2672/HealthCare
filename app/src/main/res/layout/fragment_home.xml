@@ -5,22 +5,133 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:padding="16dp"
         android:orientation="vertical"
         tools:context=".ui.fragments.Home">
-        <com.example.healthcareapp.ui.custom_components.Circle
-            android:layout_width="300dp"
-            android:id="@+id/circle"
-            android:layout_height="300dp"/>
-       <Spinner
-           android:layout_width="200dp"
-           android:padding="4dp"
-           android:id="@+id/spinner_month_year"
-           android:spinnerMode="dropdown"
-           android:layout_height="wrap_content"/>
-        <com.github.mikephil.charting.charts.BarChart
-            android:layout_width="340dp"
-            android:id="@+id/chart"
-            android:layout_height="320dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Good Morning,, "
+                    android:textSize="24dp"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:textSize="@dimen/font_size_small"
+                android:text="We wish you have a good day"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50dp"
+            android:src="@drawable/default_avatar"
+            android:layout_height="50dp"/>
+    </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="24dp"
+            android:layout_width="wrap_content"
+            android:textSize="24dp"
+            android:text="Recommend"
+            android:layout_height="wrap_content"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/yellow"
+            android:elevation="12dp"
+            app:cardCornerRadius="25dp"
+            android:layout_marginTop="12dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:textColor="@color/brown"
+                        android:textSize="@dimen/font_size_large"
+                        android:text="Daily ten minutes mediation"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:text="PLAY"
+                        android:id="@+id/btn_start_meditation"
+
+                        app:icon="@drawable/ic_play"
+                        app:iconSize="18dp"
+                        app:backgroundTint="@color/brown" />
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="180dp"
+                    android:src="@drawable/girl_meditating"
+                    android:layout_height="180dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_marginTop="24dp"
+            android:layout_width="wrap_content"
+            android:textSize="24dp"
+            android:text="Take our survey"
+            android:layout_height="wrap_content"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/yellow"
+            android:elevation="12dp"
+            app:cardCornerRadius="25dp"
+            android:layout_marginTop="12dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:textColor="@color/brown"
+                        android:textSize="@dimen/font_size_medium"
+                        android:text="Help us improve your experience by taking our survey"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:text="START"
+                        android:id="@+id/btn_start_survey"
+                        app:icon="@drawable/ic_start"
+                        app:iconSize="18dp"
+                        app:backgroundTint="@color/brown" />
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="180dp"
+                    android:src="@drawable/survey_illustration_img"
+                    android:layout_height="180dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 </layout>

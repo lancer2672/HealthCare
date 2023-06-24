@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class AuthViewModel extends ViewModel {
     public ObservableField<Boolean> isAuthenticated = new ObservableField<>(false);
 
-    public void checkUserLoggedIn(){
+    public void checkUserLoggedIn() {
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             // The user is signed in
             isAuthenticated.set(true);
