@@ -1,11 +1,9 @@
 package com.example.healthcareapp.viewmodels
 
-import android.database.Observable
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.ChatCompletion
@@ -16,15 +14,13 @@ import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
 import com.example.healthcareapp.data.models.MessageModel
 import com.example.healthcareapp.data.repositories.ChatRepository
-import com.example.healthcareapp.ui.fragments.Chat
 import com.example.healthcareapp.ui.listeners.MessageListener
 import com.example.healthcareapp.utils.Formater
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.Date
 
-const val CHAT_GPT_API_KEY = "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"
+const val CHAT_GPT_API_KEY = "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"
 
 class ChatViewModel: ViewModel() {
     private var messageListener:MessageListener? = null;
@@ -32,30 +28,35 @@ class ChatViewModel: ViewModel() {
     var messageList: ArrayList<MessageModel> = arrayListOf();
     var message = ObservableField("");
     var isLoading = MutableLiveData(false);
+    var isSendingMessage = MutableLiveData(false);
     fun loadMesssages(){
         isLoading.value = true;
-        ChatRepository.instance?.loadMessages(FirebaseAuth.getInstance().currentUser?.uid.toString()){messages->
+        ChatRepository.instance?.loadMessages(FirebaseAuth.getInstance().currentUser?.uid.toString(),{messages->
             this.messageList.addAll(messages)
             this.messageListener?.messageIsSended();
+            isLoading.value = false;
+        }){
+            AuthViewModel.getUser()?.let { ChatRepository.instance?.create(it.userId) }
             isLoading.value = false;
         }
     }
     @OptIn(BetaOpenAI::class)
     fun sendMessage(){
+        val receiveMessage = MessageModel("",true,Formater.formatChatTime(Date()));
         val sendMessage = MessageModel(message.get().toString(),false, Formater.formatChatTime(Date()));
         message.set("");
-        val receiveMessage = MessageModel("",true,Formater.formatChatTime(Date()));
+        isSendingMessage.value = true;
         messageList.add(sendMessage)
-        isLoading.value = true;
+
         viewModelScope.launch {
             val openAI = OpenAI(CHAT_GPT_API_KEY)
             try {
                 val chatCompletionRequest = ChatCompletionRequest(
-                    model = ModelId("gpt-3.5-turbo"),
+                    model = ModelId("gpt-3.5-turbo-16k-0613"),
                     messages = listOf(
                         ChatMessage(
                             role = ChatRole.User,
-                            content = message.get().toString(),
+                            content = sendMessage.message,
                         )
                     )
                 )
@@ -69,7 +70,7 @@ class ChatViewModel: ViewModel() {
                 }
                 ChatRepository.instance?.saveMessage(receiveMessage,
                     FirebaseAuth.getInstance().currentUser?.uid.toString()){
-                    Log.d("CHAT","Message saved successfully")
+                    Log.d("CHAT","Message saved successfully ${receiveMessage.message}")
                 }
 
             } catch (e: Exception) {
@@ -78,9 +79,8 @@ class ChatViewModel: ViewModel() {
             }
             finally {
                 messageList.add(receiveMessage);
-
                 messageListener?.messageIsSended();
-                isLoading.value = false;
+                isSendingMessage.value = false;
             }
         }
 

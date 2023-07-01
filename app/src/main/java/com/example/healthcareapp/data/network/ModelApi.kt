@@ -9,7 +9,6 @@ interface ModelApi {
     suspend fun getPredictedValue(
         @Query("Snoring") snoring: String,
         @Query("BMI") bmi: String,
-        @Query("sleep_hrs") sleepHours: String,
         @Query("Meal") meal: String,
         @Query("Exercise") exercise: String,
         @Query("studyhrs") studyHours: String,

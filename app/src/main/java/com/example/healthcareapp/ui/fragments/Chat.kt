@@ -1,5 +1,6 @@
 package com.example.healthcareapp.ui.fragments
 
+import android.animation.ValueAnimator
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -7,6 +8,7 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
@@ -42,12 +44,31 @@ class Chat : Fragment(), MessageListener {
 
         setUpViewModel();
         setEditTextTranformation();
+        initAnimation();
 
         binding.recMessageList.adapter = messagesAdapter;
         binding.viewmodel = viewModel;
 
         return binding.root
     }
+    private fun initAnimation() {
+        val typingDots = arrayOf(".  ", ".. ", "...")
+
+        var currentDotIndex = 0
+
+        val animator = ValueAnimator.ofInt(0, typingDots.size - 1)
+        animator.duration = 3000 // Giảm thời gian chuyển đổi giữa các chuỗi
+        animator.repeatCount = ValueAnimator.INFINITE
+        animator.addUpdateListener { valueAnimator ->
+            val animatedValue = valueAnimator.animatedValue as Int
+            currentDotIndex = animatedValue
+            binding.typingTv.text = "đang soạn ${typingDots[currentDotIndex]}"
+        }
+
+        animator.start()
+    }
+
+
     private fun setEditTextTranformation(){
         binding.edtInput.setOnFocusChangeListener { _, hasFocus ->
             val transition = TransitionInflater.from(requireContext())
@@ -72,13 +93,21 @@ class Chat : Fragment(), MessageListener {
         viewModel.loadMesssages();
         viewModel.isLoading.observe(viewLifecycleOwner){isLoading ->
             if(isLoading){
-//                binding.recMessageList.visibility = View.GONE;
-//                binding.chatProgressBar.visibility = View.VISIBLE;
+                binding.recMessageList.visibility = View.GONE;
+                binding.chatProgressBar.visibility = View.VISIBLE;
             }
             else{
-//                binding.recMessageList.visibility = View.VISIBLE;
+                binding.recMessageList.visibility = View.VISIBLE;
                 binding.recMessageList.scrollToPosition(viewModel.messageList.size -1)
-//                binding.chatProgressBar.visibility = View.GONE;
+                binding.chatProgressBar.visibility = View.GONE;
+            }
+        }
+        viewModel.isSendingMessage.observe(viewLifecycleOwner){isSending->
+            if(isSending){
+                binding.typingTv.visibility = View.VISIBLE;
+            }
+            else{
+                binding.typingTv.visibility = View.GONE;
             }
         }
     }

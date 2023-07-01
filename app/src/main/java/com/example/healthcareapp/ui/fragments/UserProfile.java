@@ -1,5 +1,6 @@
 package com.example.healthcareapp.ui.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,8 @@ import android.widget.RadioGroup;
 
 import com.example.healthcareapp.R;
 import com.example.healthcareapp.databinding.FragmentUserProfileBinding;
+import com.example.healthcareapp.ui.activities.auth.WelcomeActivity;
+import com.example.healthcareapp.viewmodels.AuthViewModel;
 import com.example.healthcareapp.viewmodels.SurveyViewModel;
 
 import java.util.Objects;
@@ -31,6 +35,27 @@ public class UserProfile extends Fragment {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_user_profile,container,false);
         chart = new Chart();
         activityHistory = new ActivityHistory();
+
+        setBindingData();
+        return binding.getRoot();
+    }
+    private void setBindingData(){
+        binding.beginningMeditation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction().addToBackStack("b").add(R.id.main_fragment, new MeditationList()).commit();
+            }
+        });
+        binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthViewModel.Companion.logout();
+                Intent intent = new Intent(requireActivity(), WelcomeActivity.class);
+                startActivity(intent);
+                requireActivity().finish();
+                Log.d("Authenticate", "Is not authenticated");
+            }
+        });
         binding.radGr.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -48,8 +73,7 @@ public class UserProfile extends Fragment {
             }
         });
         binding.radGr.check(R.id.radio_button1);
-
-        return binding.getRoot();
+        binding.idUserName.setText(Objects.requireNonNull(AuthViewModel.Companion.getUser()).getDisplayName());
     }
     private void inflateActivityHistoryFragment() {
         FragmentManager fragmentManager = getParentFragmentManager();

@@ -17,8 +17,8 @@
         android:icon="@drawable/messenger" />
 
     <item
-        android:id="@+id/menu_feedback"
-        android:title="Feedback"
-        android:icon="@drawable/ic_prescription" />
+        android:id="@+id/menu_water_reminder"
+        android:title="Reminder"
+        android:icon="@drawable/drop" />
 
 </menu>

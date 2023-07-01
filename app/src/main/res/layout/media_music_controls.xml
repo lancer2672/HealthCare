@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_gravity="bottom"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:padding="8dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@id/exo_play"
+            style="@style/ExoMediaButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_play" />
+        <ImageButton
+            android:id="@id/exo_pause"
+            style="@style/ExoMediaButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_pause" />
+    </LinearLayout>
+</LinearLayout>

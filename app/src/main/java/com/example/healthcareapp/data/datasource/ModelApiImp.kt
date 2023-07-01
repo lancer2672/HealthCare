@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ModelApiImp: ModelApi {
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.1.104:5000/")
+        .baseUrl("http:///192.168.37.54:5000/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -15,7 +15,6 @@ class ModelApiImp: ModelApi {
     override suspend fun getPredictedValue(
         snoring: String,
         bmi: String,
-        sleepHours: String,
         meal: String,
         exercise: String,
         studyHours: String,
@@ -24,7 +23,8 @@ class ModelApiImp: ModelApi {
         smoke: String,
     ): PredictedValueResponse {
             return service.getPredictedValue(
-                snoring,  bmi, sleepHours, meal,exercise,  studyHours, sleepProb,age, smoke,
+//                snoring,  bmi, sleepHours, meal,exercise,  studyHours, sleepProb,age, smoke,
+                snoring,  bmi, meal,exercise,  studyHours, sleepProb,age, smoke,
             )
     }
 }

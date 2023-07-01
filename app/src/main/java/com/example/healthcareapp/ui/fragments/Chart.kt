@@ -77,8 +77,9 @@ class Chart : Fragment() {
         val chart = binding.chart
         chart.description.isEnabled = false
         chart.setPinchZoom(false)
-        chart.isDoubleTapToZoomEnabled = false
-        chart.setScaleEnabled(false)
+
+//        chart.isDoubleTapToZoomEnabled = false
+//        chart.setScaleEnabled(false)
         chart.legend.isEnabled = false
 
         // Remove the layout grid
@@ -86,22 +87,6 @@ class Chart : Fragment() {
         chart.xAxis.setDrawGridLines(false)
         chart.axisLeft.setDrawGridLines(false)
 
-        // Set the axes
-        val xAxis = chart.xAxis
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.setDrawAxisLine(true) // Show X-axis line
-        xAxis.valueFormatter = MonthAxisValueFormatter()
-        xAxis.granularity = 1f
-
-        val yAxis = chart.axisLeft
-        yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-        yAxis.setDrawAxisLine(true) // Show Y-axis line
-        yAxis.valueFormatter = MyYAxisValueFormatter()
-        yAxis.textSize = 10f // Set Y-axis label text size
-        yAxis.zeroLineWidth = 2f
-        yAxis.zeroLineColor = R.color.brown
-        yAxis.textColor = R.color.brown
-        yAxis.labelCount = 3
 
         // Remove right Y-axis
         chart.axisRight.isEnabled = false
@@ -118,6 +103,27 @@ class Chart : Fragment() {
         dataSet.colors = listOf(color1, color2, color3, color4)
 
         chart.data = barData
+
+        // Set the axes
+        val xAxis = chart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setDrawAxisLine(true) // Show X-axis line
+        xAxis.valueFormatter = MonthAxisValueFormatter()
+        xAxis.granularity = 1f
+        xAxis.setLabelCount(dataSet.entryCount , true)
+
+        val yAxis = chart.axisLeft
+        yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+        yAxis.setDrawAxisLine(true) // Show Y-axis line
+        yAxis.valueFormatter = MyYAxisValueFormatter()
+        yAxis.textSize = 10f // Set Y-axis label text size
+        yAxis.zeroLineWidth = 2f
+        yAxis.zeroLineColor = R.color.brown
+        yAxis.textColor = R.color.brown
+        yAxis.labelCount = 3
+        yAxis.axisMinimum = 0.0f
+        yAxis.axisMaximum = 0.8f
+
 
         // Animate the chart
         chart.animateY(1000)

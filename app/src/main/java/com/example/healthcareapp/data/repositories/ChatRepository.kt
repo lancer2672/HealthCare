@@ -3,11 +3,8 @@ package com.example.healthcareapp.data.repositories
 import android.util.Log
 import com.example.healthcareapp.data.models.ChatModel
 import com.example.healthcareapp.data.models.MessageModel
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
-import java.util.Objects
 
 class ChatRepository {
     private val chatRef = FirebaseFirestore.getInstance().collection("chat")
@@ -44,7 +41,7 @@ class ChatRepository {
                 Log.w("CHAT", "Error retrieving chat document", e)
             }
     }
-    fun loadMessages(userId: String, onSuccess: (List<MessageModel>) -> Unit) {
+    fun loadMessages(userId: String, onSuccess: (List<MessageModel>) -> Unit, onFailure: (() -> Unit)? = null) {
         val chatRef = chatRef.whereEqualTo("userId", userId).limit(1)
         chatRef.get()
             .addOnSuccessListener { querySnapshot ->
@@ -57,6 +54,9 @@ class ChatRepository {
 
                     onSuccess(messageList) // Call onSuccess with the loaded message list
                 } else {
+                    if (onFailure != null) {
+                        onFailure()
+                    }
                     Log.d("CHAT", "Chat document with userId $userId not found")
                 }
             }
@@ -64,5 +64,22 @@ class ChatRepository {
                 Log.w("CHAT", "Error retrieving chat document", e)
             }
     }
+    fun create(userId: String, onSuccess: (() -> Unit)? = null, onFailure: (() -> Unit)? = null) {
+        val chat = ChatModel(userId)
+        chatRef.add(chat)
+            .addOnSuccessListener {
+                if (onSuccess != null) {
+                    onSuccess()
+                }
+                Log.w("CHAT", "Create successfully")
+            }
+            .addOnFailureListener { e ->
+                if (onFailure != null) {
+                    onFailure()
+                }
+                Log.w("CHAT", "Error adding chat document", e)
+            }
+    }
+
 }
 

@@ -12,8 +12,6 @@ import android.os.Bundle;
 
 import com.example.healthcareapp.R;
 import com.example.healthcareapp.databinding.ActivitySignUpBinding;
-import com.example.healthcareapp.ui.activities.MainActivity;
-import com.example.healthcareapp.viewmodels.SignInViewModel;
 import com.example.healthcareapp.viewmodels.SignUpViewModel;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -31,7 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onChanged(Boolean isCreateSucceeded) {
                 if(isCreateSucceeded){
-                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                    Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
                     startActivity(intent);
                 }
             }

@@ -75,6 +75,26 @@
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/cardview_dark_background"
                     android:layout_marginTop="20dp"/>
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:id="@+id/tv_sign_in_err"
+                    android:textColor="#FF6347"
+                    android:textAlignment="center"
+                    android:textSize="16dp"
+                    android:text="@={viewmodel.error}"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:id="@+id/tv_forgot"
+                    android:textColor="@color/brown"
+                    android:textAlignment="center"
+                    android:textSize="16dp"
+                    android:text="Quên mật khẩu?"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
                 <Button
 
                     android:layout_width="match_parent"
@@ -82,6 +102,21 @@
                     android:id="@+id/loginButton"
                     android:text="Login"
                     android:textSize="18sp"
+                    android:textColor="@color/brown"
+                    android:layout_marginTop="30dp"
+                    android:backgroundTint="@color/light_yellow"
+                    app:cornerRadius = "20dp"/>
+                <com.google.android.material.button.MaterialButton
+
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:id="@+id/loginGGBtn"
+                    app:iconTint="@null"
+                    app:icon="@drawable/google"
+                    android:text="Login with google"
+                    android:visibility="gone"
+                    android:textSize="18sp"
+                    app:iconSize="30dp"
                     android:textColor="@color/brown"
                     android:layout_marginTop="30dp"
                     android:backgroundTint="@color/light_yellow"

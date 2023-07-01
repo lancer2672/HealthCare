@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,12 +16,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthCareApp"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.activities.Meditation"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.OnBoarding"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,18 +35,16 @@
             android:exported="true" />
         <activity
             android:name=".ui.activities.auth.SignInActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".ui.activities.auth.WelcomeActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".ui.activities.MainActivity"
             android:exported="true"></activity>
         <activity
+            android:name=".ui.activities.MainActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activities.SurveyActivity"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>

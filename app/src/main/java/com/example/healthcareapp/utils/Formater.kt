@@ -7,35 +7,34 @@ import java.util.Locale
 class Formater {
     companion object{
         fun formatChatTime(date:Date): String{
-            val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss", Locale.getDefault())
+            val sdf = SimpleDateFormat("dd/M/yyyy hh:mm", Locale.getDefault())
             return sdf.format(date);
         }
         fun formatPredictedValue(value: Float): String {
-            val values = arrayOf(
-                "Bạn không có khả năng bị đau đầu",
-                "Khả năng bị đau đầu của bạn rất thấp",
-                "Khả năng bị đau đầu của bạn thấp",
-                "Khả năng bị đau đầu của bạn ở mức trung bình",
-                "Khả năng bị đau đầu của bạn hơi cao",
-                "Khả năng bị đau đầu của bạn cao",
-                "Bạn có khả năng bị đau đầu"
-            )
-            val positions = floatArrayOf(0f, 0.15f, 0.3f, 0.5f, 0.7f, 0.85f, 1f)
-
-            var index = -1
-            var minDistance = Float.MAX_VALUE
-            for (i in positions.indices) {
-                val distance = kotlin.math.abs(value - positions[i])
-                if (distance < minDistance) {
-                    minDistance = distance
-                    index = i
-                }
+            val advice = when {
+                value < 0.1 -> "🎉 Tuyệt vời!Bạn không có khả năng bị đau đầu."
+                value < 0.2 -> "😊 Tốt! Khả năng bị đau đầu rất thấp."
+                value < 0.4 -> "🙂 Khá tốt! Sức khoẻ của bạn khá tốt và khả năng bị đau đầu thấp."
+                value < 0.6 -> "😐 Khả năng bị đau đầu ở mức trung bình."
+                value < 0.8 -> "🙁 Khả năng bị đau đầu hơi cao."
+                value < 0.9 -> "😞 Kém! Khả năng bị đau đầu cao."
+                else -> "😔 Rất kém! Bạn có khả năng cao bị đau đầu."
             }
-            // Make sure the index is within the bounds of our values array
-            return if (index < 0 || index >= values.size) {
-                ""
-            } else values[index]
-        }
 
+            return advice
+        }
+        fun formatDuration(durationMs: Long): String {
+            val seconds = (durationMs / 1000).toInt()
+            val minutes = seconds / 60
+            val remainingSeconds = seconds % 60
+            return if (minutes > 0) {
+                String.format("%d:%02d", minutes, remainingSeconds)
+            } else {
+                String.format("0:%02d", remainingSeconds)
+            }
+        }
+        fun formatTime(hour: Int, minute: Int): String {
+            return String.format("%02d:%02d", hour, minute)
+        }
     }
 }

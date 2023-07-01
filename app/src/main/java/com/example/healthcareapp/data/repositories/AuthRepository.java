@@ -23,6 +23,18 @@ public class AuthRepository {
         }
         return instance;
     }
+    public void sendResetPasswordEmail(String email) {
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("Authentication", "Email sent.");
+                        }
+                    }
+                });
+    }
+
     private FirebaseAuth firebaseAuth = FirebaseAuthManager.getInstance();
 
     public void signInWithEmail(String email, String password, OnCompleteListener<AuthResult> onCompleteListener) {

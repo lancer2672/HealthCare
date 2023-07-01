@@ -58,19 +58,22 @@ class SurveyViewModel: ViewModel() {
     }
     fun getSurveyHistory(){
         isLoading.value = true;
-        SurveyRepository.instance?.getSurveyHistory(onSuccess = {result->
-            surveyHistoryList.clear();
-            surveyHistoryList.addAll(result);
+        AuthViewModel.getUser()?.let {
+            SurveyRepository.instance?.getSurveyHistory(it.userId,onSuccess = { result->
+                Log.d("e ",result.size.toString());
+                surveyHistoryList.clear();
+                surveyHistoryList.addAll(result.filter { item -> item.userId == it.userId});
 
-            //get range of month year
-            monthYearList.clear()
-            monthYearList.addAll(createTimeFrameBySurveyHistoryList(result))
+                //get range of month year
+                monthYearList.clear()
+                monthYearList.addAll(createTimeFrameBySurveyHistoryList(result))
 
-            isLoading.value = false;
+                isLoading.value = false;
 
-        }, onFailure = {
-            isLoading.value = false;
-        })
+            }, onFailure = {
+                isLoading.value = false;
+            })
+        }
     }
     fun getDataChartByDate(monthYearModel: MonthYearModel) {
         dataChart.clear();
@@ -79,9 +82,10 @@ class SurveyViewModel: ViewModel() {
             calendar.time = questionnaire.createdAt
             val questionnaireMonth = calendar.get(Calendar.MONTH) + 1 // Adjust for 0-based indexing
             val questionnaireYear = calendar.get(Calendar.YEAR)
+            val questionnaireDate = calendar.get(Calendar.DATE)
             if(questionnaireMonth == monthYearModel.month && questionnaireYear == monthYearModel.year)
             {
-                dataChart.add(BarEntry(monthYearModel.month.toFloat(),questionnaire.predictedResult))
+                dataChart.add(BarEntry(questionnaireDate.toFloat(),questionnaire.predictedResult))
             }
 
         }
@@ -152,5 +156,8 @@ class SurveyViewModel: ViewModel() {
                 Log.d("Predicted Result in ViewModel", it.toString())
                 onSuccess(it)
             }
+    }
+    fun readAndUpdateFileExcel(){
+
     }
 }
